@@ -33,13 +33,14 @@ public class Welcome {
 				System.out.println("[ERROR] Invalid input.");
 			}
 		} while (!valid);
+		//sc.close(); //no you cannot close System.in
 		return input;
 	}
 	
 	static Connection connectDatabase() { //return whether connection is successful
 		String databaseAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db36";
 		String databaseUsername = "Group36";
-		String databasePassword = "EM...You know it"; //change later!
+		String databasePassword = "_"; //change later!
 		Connection c = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -67,7 +68,7 @@ public class Welcome {
 					AdminInstance.start(c);
 					break;
 				case 2:
-					//PassengerInstance.start();
+					PassengerInstance.start();
 					break;
 				case 3:
 					//DriverInstance.start();

@@ -224,7 +224,9 @@ class AdminInstance {
 					System.out.println();
 				} break;
 				
-				case 5: return;
+				case 5: {
+					System.out.println();
+				} return;
 			}
 		}
 	}
