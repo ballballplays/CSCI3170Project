@@ -29,18 +29,18 @@ class AdminInstance {
 									+ "(did INTEGER,"
 									+ "name VARCHAR(30),"
 									+ "vid CHAR(6),"
-									+ "CONSTRAINT DriverKey PRIMARY KEY(did))";
+									+ "CONSTRAINT DriverKey PRIMARY KEY (did))";
 					String vehicle = "CREATE TABLE Vehicle"
 									+ "(vid CHAR(6),"
 									+ "model VARCHAR(30),"
 									+ "myear INTEGER,"
 									+ "seats INTEGER,"
-									+ "CONSTRAINT VehicleKey PRIMARY KEY(vid),"
+									+ "CONSTRAINT VehicleKey PRIMARY KEY (vid),"
 									+ "CONSTRAINT FourDigit CHECK (myear >= 2010 AND myear <= 2018))";
 					String passenger = "CREATE TABLE Passenger"
 									+ "(pid INTEGER,"
 									+ "name VARCHAR(30),"
-									+ "CONSTRAINT PassengerKey PRIMARY KEY(pid))";
+									+ "CONSTRAINT PassengerKey PRIMARY KEY (pid))";
 					String request = "CREATE TABLE Request"
 									+ "(rid INTEGER,"
 									+ "pid INTEGER,"
@@ -48,7 +48,8 @@ class AdminInstance {
 									+ "model VARCHAR(30),"
 									+ "passengers INTEGER,"
 									+ "taken INTEGER,"
-									+ "CONSTRAINT RequestKey PRIMARY KEY(rid))";
+									+ "CONSTRAINT RequestKey PRIMARY KEY (rid),"
+									+ "CONSTRAINT PassengerExistence FOREIGN KEY (pid) REFERENCES Passenger(pid) ON DELETE NO ACTION ON UPDATE NO ACTION)";
 					String trip = "CREATE TABLE Trip"
 									+ "(tid INTEGER,"
 									+ "did INTEGER,"
@@ -64,7 +65,7 @@ class AdminInstance {
 						}
 						System.out.println("Done! Tables are created!\n");
 					} catch (SQLException ex) {
-						System.out.println(ex.getMessage());
+						System.out.println(ex.getMessage()+"\n");
 					}
 				} break;
 				

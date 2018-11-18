@@ -68,7 +68,7 @@ public class Welcome {
 					AdminInstance.start(c);
 					break;
 				case 2:
-					PassengerInstance.start();
+					PassengerInstance.start(c);
 					break;
 				case 3:
 					//DriverInstance.start();
