@@ -7,7 +7,7 @@ public class Welcome {
 	public static void main(String[] args) {
 		printWelcomeDialog();
 	}
-	
+
 	public static int getOption(String question, List<String> options) {
 		System.out.println(question);
 		int count = 0;
@@ -36,7 +36,7 @@ public class Welcome {
 		//sc.close(); //no you cannot close System.in
 		return input;
 	}
-	
+
 	static Connection connectDatabase() { //return whether connection is successful
 		String databaseAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db36";
 		String databaseUsername = "Group36";
@@ -54,7 +54,7 @@ public class Welcome {
 		}
 		return c;
 	}
-	
+
 	static void printWelcomeDialog() {
 		Connection c = connectDatabase();
 		if (c == null) return;
@@ -71,7 +71,7 @@ public class Welcome {
 					PassengerInstance.start(c);
 					break;
 				case 3:
-					//DriverInstance.start();
+					DriverInstance.start(c);
 					break;
 				case 4:
 					//then why are you here?

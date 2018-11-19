@@ -55,7 +55,7 @@ class AdminInstance {
 									+ "did INTEGER,"
 									+ "pid INTEGER,"
 									+ "start TIMESTAMP,"
-									+ "end TIMESTAMP,"
+									+ "end TIMESTAMP NULL DEFAULT NULL,"
 									+ "fee INTEGER,"
 									+ "rating INTEGER,"
 									+ "CONSTRAINT TripKey PRIMARY KEY(tid))";
@@ -68,7 +68,7 @@ class AdminInstance {
 						System.out.println(ex.getMessage()+"\n");
 					}
 				} break;
-				
+
 				case 2: {
 					String drop = "DROP TABLE IF EXISTS Driver, Vehicle, Passenger, Request, Trip";
 					System.out.print("Processing...");
@@ -79,7 +79,7 @@ class AdminInstance {
 						System.out.println(ex.getMessage());
 					}
 				} break;
-				
+
 				case 3: {
 					System.out.println("Please enter the folder path.");
 					Scanner sc = new Scanner(System.in);
@@ -121,7 +121,7 @@ class AdminInstance {
 										System.out.println(ex.getMessage());
 									}
 								} break;
-								
+
 								case "vehicles.csv": {
 									try (PreparedStatement prep = c.prepareStatement("INSERT INTO Vehicle VALUES (?, ?, ?, ?)")) {
 										c.setAutoCommit(false);
@@ -145,7 +145,7 @@ class AdminInstance {
 										System.out.println(ex.getMessage());
 									}
 								} break;
-								
+
 								case "passengers.csv": {
 									try (PreparedStatement prep = c.prepareStatement("INSERT INTO Passenger Values (?, ?)")) {
 										c.setAutoCommit(false);
@@ -168,7 +168,7 @@ class AdminInstance {
 									}
 
 								} break;
-								
+
 								case "trips.csv": {
 									try (PreparedStatement prep = c.prepareStatement("INSERT INTO Trip Values (?, ?, ?, ?, ?, ?, ?)")) {
 										c.setAutoCommit(false);
@@ -195,7 +195,7 @@ class AdminInstance {
 										System.out.println(ex.getMessage());
 									}
 								} break;
-								
+
 								default:
 									System.out.println("[WARNING] Ignoring " + file.getName() + ".");
 									break;
@@ -204,7 +204,7 @@ class AdminInstance {
 						System.out.println("Data is loaded!\n");
 					}
 				} break;
-				
+
 				case 4: {
 					final List<String> tableNames = Arrays.asList("Driver","Vehicle","Passenger","Request","Trip");
 					try (Statement st = c.createStatement()) {
@@ -224,14 +224,14 @@ class AdminInstance {
 					}
 					System.out.println();
 				} break;
-				
+
 				case 5: {
 					System.out.println();
 				} return;
 			}
 		}
 	}
-	
+
 	static List<List<String>> loadCSVAsList(File f) {
 		try {
 			Path p = f.toPath();
