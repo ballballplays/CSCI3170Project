@@ -2,6 +2,10 @@ package csci3170;
 
 import java.util.*;
 import java.sql.*;
+import java.io.*;
+import java.nio.*;
+import java.nio.charset.*;
+import java.nio.file.*;
 
 public class Welcome {
 	public static void main(String[] args) {
@@ -40,7 +44,7 @@ public class Welcome {
 	static Connection connectDatabase() { //return whether connection is successful
 		String databaseAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db36";
 		String databaseUsername = "Group36";
-		String databasePassword = "_"; //change later!
+		String databasePassword = readPassword(); //change later!
 		Connection c = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -79,6 +83,16 @@ public class Welcome {
 					break outwhile;
 				default: throw new InternalError("Cannot happen");
 			}
+		}
+	}
+	
+	static String readPassword() {
+		try {
+			return Files.readAllLines(new File("password").toPath(),Charset.forName("UTF-8")).get(0);
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+			System.exit(0);
+			throw new InternalError();
 		}
 	}
 }
