@@ -15,3 +15,5 @@ To compile, use
 To run, use
 
     java -cp .:mysql-connector-java-8.0.13.jar csci3170.Welcome
+
+As a reminder, you may need to change the path separator ```:``` if you are on non-UNIX platforms.
