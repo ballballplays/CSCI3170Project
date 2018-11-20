@@ -2,6 +2,7 @@ package csci3170;
 
 import java.util.*;
 import java.sql.*;
+import static csci3170.Utilities.*;
 
 class PassengerInstance {
 	static void start(Connection c) {
@@ -30,11 +31,13 @@ class PassengerInstance {
 					int driverCount = -1;
 					try (PreparedStatement prep = c.prepareStatement(query)) {
 						prep.setInt(1,passengerCount);
+						int previousArgumentCount = 1;
 						if (earliestYear != -1) {
 							prep.setInt(2,earliestYear);
+							previousArgumentCount++;
 						}
 						if (!(model.equals(""))) {
-							prep.setString(3,model+"%");
+							prep.setString(previousArgumentCount+1,model+"%");
 						}
 						ResultSet result = prep.executeQuery();
 						result.next();
@@ -97,8 +100,8 @@ class PassengerInstance {
 								System.out.print(result.getString(2) + ", ");
 								System.out.print(result.getString(3) + ", ");
 								System.out.print(result.getString(4) + ", ");
-								System.out.print(dropLast(result.getTimestamp(5).toString(),2) + ", ");
-								System.out.print(dropLast(result.getTimestamp(6).toString(),2) + ", ");
+								System.out.print(prettifyNull(dropLastNullable(result.getTimestamp(5).toString(),2)) + ", ");
+								System.out.print(prettifyNull(dropLastNullable(result.getTimestamp(6).toString(),2)) + ", ");
 								System.out.print(result.getInt(7) + ", ");
 								System.out.println(result.getInt(8));
 							}
@@ -119,40 +122,29 @@ class PassengerInstance {
 		}
 	}
 	
+	@Deprecated
 	static int forceInt(Scanner sc, String question) {
-		return forceNaturalNumber(sc,question,false);
+		return Utilities.forceInt(sc,question);
 	}
 	
+	@Deprecated
 	static int forceNaturalNumber(Scanner sc, String question, boolean allowEmpty) {
-		do {
-			System.out.println(question);
-			String input = sc.nextLine();
-			try {
-				if (input.equals("") && allowEmpty) {
-					return -1;
-				}
-				int inputInt = Integer.parseInt(input);
-				return inputInt;
-			} catch (Exception ex) {
-				System.out.println("[ERROR] Invalid input.");
-			}
-		} while (true);
+		return Utilities.forceNaturalNumber(sc,question,allowEmpty);
 	}
 	
-	static java.sql.Timestamp forceTimestamp(Scanner sc, String question, boolean startDate) {
-		do {
-			System.out.println(question);
-			String input = sc.nextLine();
-			try {
-				Timestamp stamp = Timestamp.valueOf(input + (startDate?" 00:00:00":" 23:59:59"));
-				return stamp;
-			} catch (Exception ex) {
-				System.out.println("[ERROR] Invalid input.");
-			}
-		} while (true);
+	@Deprecated
+	static Timestamp forceTimestamp(Scanner sc, String question, boolean startDate) {
+		return Utilities.forceTimestamp(sc,question,startDate);
 	}
-	
+		
+	@Deprecated
 	static String dropLast(String s, int n) {
+		System.out.println("NOTE: This function is not null-safe. Please consider using Utilities.dropLastNullable(null,n) to return null.");
 		return s.substring(0,s.length()-n);
+	}
+	
+	@Deprecated
+	static String prettifyNull(String s) {
+		return Utilities.prettifyNull(s);
 	}
 }

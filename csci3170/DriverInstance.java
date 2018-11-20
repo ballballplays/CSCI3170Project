@@ -36,7 +36,7 @@ class DriverInstance {
 						System.out.println(ex.getMessage()+"\n");
 					}
 					//query the available request
-          String query = "SELECT R.rid,P.name,R.passengers FROM Driver D, Request R, Passenger P,Vehicle V WHERE (R.pid = P.pid AND V.seats >= R.passengers AND R.myear <= V.myear AND LOWER(V.model) LIKE CONCAT(R.model, '%') AND D.did = ? AND D.vid = V.vid AND R.taken = 0)";
+          			String query = "SELECT R.rid,P.name,R.passengers FROM Driver D, Request R, Passenger P,Vehicle V WHERE (R.pid = P.pid AND V.seats >= R.passengers AND R.myear <= V.myear AND LOWER(V.model) LIKE CONCAT(R.model, '%') AND D.did = ? AND D.vid = V.vid AND R.taken = 0)";
 					try {
 						PreparedStatement prep3 = c.prepareStatement(query);
 						prep3.setInt(1,id);
@@ -153,9 +153,9 @@ class DriverInstance {
 						System.out.println(ex.getMessage()+"\n");
 					}*/
 					String query = "SELECT T.tid,T.pid,T.start FROM Trip T WHERE (T.did = ? AND T.end IS NULL)";
-          int tid;
+          			int tid;
 					int pid;
-					TIMESTAMP ts;
+					Timestamp ts;
 					try {
 						PreparedStatement prep = c.prepareStatement(query);
 						prep.setInt(1,id);
