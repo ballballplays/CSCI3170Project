@@ -103,7 +103,7 @@ class PassengerInstance {
 								System.out.print(prettifyNull(dropLastNullable(result.getTimestamp(5).toString(),2)) + ", ");
 								System.out.print(prettifyNull(dropLastNullable(result.getTimestamp(6).toString(),2)) + ", ");
 								System.out.print(result.getInt(7) + ", ");
-								System.out.println(result.getInt(8));
+								System.out.println(Utilities.prettifyRating(result.getInt(8)));
 							}
 						}
 						System.out.println();

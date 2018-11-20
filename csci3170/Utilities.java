@@ -27,6 +27,14 @@ final class Utilities {
 		}
 	}
 	
+	static String prettifyRating(int rating) {
+		if (rating <= 5 && rating >= 1) {
+			return rating + "";
+		} else {
+			return "[UNKNOWN]";
+		}
+	}
+	
 	static int forceInt(Scanner sc, String question) {
 		return forceNaturalNumber(sc,question,false);
 	}
