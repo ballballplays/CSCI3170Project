@@ -113,6 +113,58 @@ class PassengerInstance {
 				} break;
 				
 				case 3: {
+					Scanner Sc = new Scanner(System.in);
+					int pid = forceInt(Sc, "Please enter your ID.");
+					int tripId = forceInt(Sc, "Please enter your trip ID.");
+					boolean valid = false;
+					int rating = -1;
+					do{
+						System.out.println("Please enter the rating.");
+						try{
+							rating = Sc.nextInt();
+							if(rating>=1 && 5>=rating){
+								valid=true;
+							}
+						}	catch (Exception ex){
+							valid = false;
+						}
+						if (!valid){
+							System.out.println("[ERROR] Invalid input.");
+						}
+					} while (!valid);
+					String query = "UPDATE Trip SET rating = ? WHERE pid = ? AND tid = ?";
+					try (PreparedStatement prep = c.prepareStatement(query)){
+						prep.setInt(1,rating);
+						prep.setInt(2,pid);
+						prep.setInt(3,tripId);
+						int numOfChanges = prep.executeUpdate();
+						if(numOfChanges==0){
+							System.out.println("[Error] No trip found.");
+							break;
+						} else{
+							System.out.println("Trip ID, Driver Name, Vehicle ID, Vehicle Model, Start, End, Fee, Rating");
+							String newquery = "SELECT T.tid, D.name, V.vid, V.model, T.start, T.end, T.fee, T.rating FROM Trip T, Driver D, Vehicle V WHERE (T.pid = ? AND T.did = D.did AND V.vid = D.vid AND T.tid = ?)";
+
+							PreparedStatement prep2 = c.prepareStatement(newquery);
+							prep2.setInt(1, pid);
+							prep2.setInt(2, tripId);
+							ResultSet result = prep2.executeQuery();
+							while (result.next()){
+								System.out.print(result.getInt(1) + ", ");
+								System.out.print(result.getString(2) + ", ");
+								System.out.print(result.getString(3) + ", ");
+								System.out.print(result.getString(4) + ", ");
+								System.out.print(prettifyNull(dropLastNullable(result.getTimestamp(5).toString(),2)) + ", ");
+								System.out.print(prettifyNull(dropLastNullable(result.getTimestamp(6).toString(),2)) + ", ");
+								System.out.print(result.getInt(7) + ", ");
+								System.out.println(Utilities.prettifyRating(result.getInt(8)));
+							}
+						}
+						
+					}
+					catch (SQLException ex){
+						System.out.println(ex.getMessage()+"\n");
+					}
 				} break;
 				
 				case 4: {
